@@ -1,12 +1,15 @@
 <template>
-  <div class="app">
     <a-layout class="pg-index">
         <a-layout-sider v-model="collapsed" :trigger="null" collapsible>
             <a-menu theme="dark" mode="inline" @click="handleMenuClick">
-              <a-menu-item v-for="(item, index) in microApps" :key="index">
-                <a-icon type="user" />
-                <span>{{item.name}}</span>
-              </a-menu-item>
+                <a-menu-item key="1">
+                    <a-icon type="user" />
+                    <span>app1-vue</span>
+                </a-menu-item>
+                <a-menu-item key="2">
+                    <a-icon type="video-camera" />
+                    <span>app2-react</span>
+                </a-menu-item>
             </a-menu>
         </a-layout-sider>
         <a-layout style="height: 100vh">
@@ -22,42 +25,35 @@
             </a-layout-content>
         </a-layout>
     </a-layout>
-  </div>
 </template>
 
 <script>
 import { ref } from '@vue/composition-api'
-import microApps from './micro-apps'
 
 export default {
-  name: 'App',
-  setup() {
-    const collapsed = ref(false)
+    name: 'Index',
+    setup() {
+        const collapsed = ref(false)
+        const menuPath = {
+            '1': '/app1',
+            '2': '/app2',
+        }
 
-    return {
-        collapsed,
-        microApps
+        return {
+            collapsed,
+            menuPath
+        }
+    },
+    methods: {
+        handleMenuClick({ item, key, keyPath }){
+            console.log('menu-info: ', { item, key, keyPath })
+            this.$router.push(this.menuPath[key])
+        }
     }
-  },
-  methods: {
-    handleMenuClick({ item, key, keyPath }){
-        console.log('menu-info: ', { item, key, keyPath })
-        this.$router.push(this.microApps[key].activeRule)
-    }
-  }
 }
 </script>
 
 <style lang="less">
-.app {
-  font-family: Avenir, Helvetica, Arial, sans-serif;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
-  color: #2c3e50;
-  margin: 0;
-  padding: 0;
-}
-
 .pg-index .trigger {
   font-size: 18px;
   line-height: 64px;
