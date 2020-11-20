@@ -24,9 +24,10 @@ registerMicroApps(microApps, {
 start({
   prefetch: false, // 是否开启预加载，默认为 true
   sandbox: {strictStyleIsolation: false}, // 是否开启严格的样式隔离模式
+  // 指定部分特殊的动态加载的微应用资源（css/js) 不被 qiankun 劫持处理，例如vue-router懒加载组件js
   excludeAssetFilter: (assetUrl) => {
     console.info('[LifeCycle] assetUrl: ', assetUrl)
-    return true
+    return false
   },
 });
 
